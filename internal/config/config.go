@@ -12,7 +12,7 @@ type Config struct {
 	Env         string        `toml:"env" env-default:"prod"`
 	StoragePath string        `toml:"storage_path" env-required:"true"`
 	TokenTTL    time.Duration `toml:"token_ttl"  env-required:"true"`
-	GRPCConfig  GRPCConfig    `toml:"grpc"`
+	GRPC        GRPCConfig    `toml:"grpc"`
 }
 
 type GRPCConfig struct {
