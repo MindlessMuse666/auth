@@ -1,21 +1,13 @@
 package main
 
 import (
-	"log/slog"
-	"os"
-
 	"github.com/MindlessMuse666/auth/internal/config"
-)
-
-const (
-	envLocal = "local"
-	envDev   = "dev"
-	envProd  = "prod"
+	"github.com/MindlessMuse666/auth/internal/logging"
 )
 
 func main() {
 	cfg := config.MustLoad()
-	log := setupLogger(cfg.Env)
+	log := logging.New(cfg.Env)
 
 	log.Info(
 		"Запуск приложения",
@@ -25,25 +17,4 @@ func main() {
 	// TODO: инициализировать аппку (пакет app)
 
 	// TODO: запустить gRPC-сервер аппки
-}
-
-func setupLogger(env string) *slog.Logger {
-	var log *slog.Logger
-
-	switch env {
-	case envLocal:
-		log = slog.New(
-			slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}),
-		)
-	case envDev:
-		log = slog.New(
-			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}),
-		)
-	case envProd:
-		log = slog.New(
-			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}),
-		)
-	}
-
-	return log
 }
